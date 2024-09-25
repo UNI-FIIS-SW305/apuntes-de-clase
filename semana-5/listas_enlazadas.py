@@ -56,7 +56,7 @@ class PilaBasadaEnListasEnlazadas:
         return resultado
 
 
-if __name__ == "__main__":
+def prueba_pilas():
     pila = PilaBasadaEnListasEnlazadas()
 
     pila.apilar("w")
@@ -71,3 +71,39 @@ if __name__ == "__main__":
     print(f"{pila.tamanio()=}")  # Deberia ser: 1
 
     print(f"{pila.cima()=}")  # Deberia ser: w
+
+
+class ColaBasadaEnListaEnlazadas:
+
+    def __init__(self) -> None:
+        self.cabeza_lista = None
+        self.numero_elementos = 0
+
+    def encolar(self, elemento):
+        nuevo_nodo = NodoSimple(elemento=elemento, siguiente=None)
+
+        if self.cabeza_lista is None:
+            self.cabeza_lista = nuevo_nodo
+        else:
+            ultimo_nodo = self.cabeza_lista
+            # Algo pasa
+            while ultimo_nodo.siguiente is not None:
+                ultimo_nodo = ultimo_nodo.siguiente
+
+            ultimo_nodo.siguiente = nuevo_nodo
+
+        self.numero_elementos = self.numero_elementos + 1
+
+    def desencolar(self):
+        return None
+
+
+if __name__ == "__main__":
+    una_cola = ColaBasadaEnListaEnlazadas()
+
+    una_cola.encolar(1)
+    una_cola.encolar(2)
+    una_cola.encolar(3)
+
+    resultado = una_cola.desencolar()
+    print(f"{resultado=}")  # Deberia ser: 1
