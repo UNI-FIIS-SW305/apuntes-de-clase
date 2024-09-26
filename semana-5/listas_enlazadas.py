@@ -94,16 +94,97 @@ class ColaBasadaEnListaEnlazadas:
 
         self.numero_elementos = self.numero_elementos + 1
 
+    def esta_vacia(self):
+        return self.numero_elementos == 0
+
     def desencolar(self):
-        return None
+        if self.esta_vacia():
+            return None
+
+        resultado = self.cabeza_lista.elemento
+        self.cabeza_lista = self.cabeza_lista.siguiente
+        self.numero_elementos = self.numero_elementos - 1
+
+        return resultado
+
+    def representar(self):
+        elementos = []
+        nodo_actual = self.cabeza_lista
+        while nodo_actual is not None:
+            elementos.append(str(nodo_actual.elemento))
+            nodo_actual = nodo_actual.siguiente
+
+        return f'({",".join(elementos)})'
+
+    def primero(self):
+        if self.numero_elementos == 0:
+            return None
+        return self.cabeza_lista.elemento
+
+
+class ColaBasadaEnListasEnlazadas2:
+
+    def __init__(self) -> None:
+        self.cabeza_lista = None
+        self.final_lista = None
+        self.numero_elementos = 0
+
+    def representar(self):
+        elementos = []
+        nodo_actual = self.cabeza_lista
+        while nodo_actual is not None:
+            elementos.append(str(nodo_actual.elemento))
+            nodo_actual = nodo_actual.siguiente
+
+        return f'({",".join(elementos)})'
+
+    def esta_vacia(self):
+        return self.numero_elementos == 0
+
+    def encolar(self, elemento):
+        nuevo_nodo = NodoSimple(elemento=elemento, siguiente=None)
+
+        if self.esta_vacia():
+            self.cabeza_lista = nuevo_nodo
+        else:
+            self.final_lista.siguiente = nuevo_nodo
+
+        self.final_lista = nuevo_nodo
+        self.numero_elementos = self.numero_elementos + 1
+
+    def desencolar(self):
+        if self.esta_vacia():
+            return None
+
+        resultado = self.cabeza_lista.elemento
+        self.cabeza_lista = self.cabeza_lista.siguiente
+
+        if self.esta_vacia():
+            self.final_lista = None
+
+        self.numero_elementos = self.numero_elementos - 1
+        return resultado
+
+    def primero(self):
+        if self.esta_vacia():
+            return None
+        return self.cabeza_lista.elemento
 
 
 if __name__ == "__main__":
-    una_cola = ColaBasadaEnListaEnlazadas()
+    # una_cola = ColaBasadaEnListaEnlazadas()
+    una_cola = ColaBasadaEnListasEnlazadas2()
 
     una_cola.encolar(1)
     una_cola.encolar(2)
     una_cola.encolar(3)
 
     resultado = una_cola.desencolar()
-    print(f"{resultado=}")  # Deberia ser: 1
+    print(f" Desencolar ->{resultado=}")  # Deberia ser: 1
+    print(f"{una_cola.numero_elementos=}")  # Deberia ser: 2
+    print(f"{una_cola.representar()=}")  # Deberia ser: (2,3)
+
+    print(f"{una_cola.primero()=}")  # Deberia ser: 2
+
+    # Primera cola: 1000 elementos
+    # Segunda cola: 2 millones elementos
