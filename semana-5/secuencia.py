@@ -77,6 +77,49 @@ class SecuenciaListasEnlazadas:
 
         return f"({','.join(elementos)})"
 
+    def obtener_elemento(self, posicion):
+        if posicion > self.numero_elementos - 1 or posicion < 0:
+            return None
+
+        nodo_objetivo = self.cabeza_lista
+        for _ in range(posicion):
+            nodo_objetivo = nodo_objetivo.siguiente
+
+        return nodo_objetivo.elemento
+
+    def obtener_posicion(self, elemento):
+
+        nodo_objetivo = self.cabeza_lista
+
+        for posicion_candidata in range(self.numero_elementos - 1):
+            if nodo_objetivo.elemento == elemento:
+                return posicion_candidata
+            nodo_objetivo = nodo_objetivo.siguiente
+
+        return -1
+
+    def insertar(self, posicion, elemento):
+        if posicion > self.numero_elementos - 1 or posicion < 0:
+            return None
+        elif posicion == 0:
+            self.insertar_frente(elemento)
+        elif posicion == self.numero_elementos:
+            self.insertar_final(elemento)
+        else:
+            nodo_predecesor = self.cabeza_lista
+            for _ in range(posicion - 1):
+                nodo_predecesor = nodo_predecesor.siguiente
+
+            nuevo_nodo = NodoSimple(
+                elemento=elemento, siguiente=nodo_predecesor.siguiente
+            )
+            nodo_predecesor.siguiente = nuevo_nodo
+
+            self.numero_elementos = self.numero_elementos + 1
+
+    def remover(self, posicion):
+        return
+
 
 if __name__ == "__main__":
 
@@ -84,29 +127,36 @@ if __name__ == "__main__":
     print(f"{mi_secuencia.numero_elementos=}")  # Deberia ser 0
     print(f"{mi_secuencia.esta_vacia()=}")  # Deberia ser True
 
-    mi_secuencia.insertar_frente(2)  # Secuencia deberia ser: 2 ->
-    mi_secuencia.insertar_frente(1)  # Secuencia deberia ser: 1-> 2
-    mi_secuencia.insertar_frente(0)  # Secuencia deberia ser: 0 -> 1-> 2
+    mi_secuencia.insertar_final(0)
+    mi_secuencia.insertar_final(1)
+    mi_secuencia.insertar_final(2)
+    mi_secuencia.insertar_final(3)
+
+    print(f"{mi_secuencia.obtener_elemento(posicion=-1)=}")  # Deberia ver: None
+    print(f"{mi_secuencia.obtener_elemento(posicion=4)=}")  # Deberia ver: None
+    print(f"{mi_secuencia.obtener_elemento(posicion=2)=}")  # Deberia ver: 2
+    print(f"{mi_secuencia.obtener_elemento(posicion=0)=}")  # Deberia ver: 0
+
+    # print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 2, 3
+    mi_secuencia.insertar_final(2)
+    print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 2, 3, 2
+    print(f"{mi_secuencia.obtener_posicion(3)=}")  # Deberia ver: 3
+    print(f"{mi_secuencia.obtener_posicion(2)=}")  # Deberia ver: 2
+    print(f"{mi_secuencia.obtener_posicion(4)=}")  # Deberia ver: -1
 
     print(f"{mi_secuencia.representar()=}")
-    print(f"{mi_secuencia.remover_final()=}")  # Deberia ver: 2
-    print(f"{mi_secuencia.remover_final()=}")  # Deberia ver: 1
-    print(f"{mi_secuencia.remover_final()=}")  # Deberia ver: 0
-    print(f"{mi_secuencia.remover_final()=}")  # Deberia ver: None
-    print(f"{mi_secuencia.representar()=}")  # Deberia ver: ()
+    mi_secuencia.insertar(posicion=2, elemento=20)
+    print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 20, 2, 3, 2
 
-    # print(f"{mi_secuencia.eliminar_frente()=}")  # Deberia ver: None
-    # mi_secuencia.insertar_final(0)
-    # print(f"{mi_secuencia.eliminar_frente()=}")  # Deberia ver: 0
-    # print(f"{mi_secuencia.representar()=}")
-    # print(f"{mi_secuencia.cabeza_lista=}")  # Deberia ver: None
-    # print(f"{mi_secuencia.final_lista=}")  # Deberia ver: None
+    mi_secuencia.insertar(posicion=4, elemento=40)
+    print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 20, 2, 40, 3, 2
 
-    # mi_secuencia.insertar_final(1)
-    # mi_secuencia.insertar_final(2)
-
-    # print(f"{mi_secuencia.representar()=}")  # Deberia ver: (0, 1, 2)
-    # print(f"{mi_secuencia.eliminar_frente()=}")  # Deberia ver: 0
-    # print(f"{mi_secuencia.representar()=}")  # Deberia ver: ( 1, 2)
+    print(
+        f"{mi_secuencia.remover(posicion=2)=}"
+    )  # Deberia retornar 20. La lista queda: 0, 1, 2, 40, 3, 2
+    print(
+        f"{mi_secuencia.remover(posicion=3)=}"
+    )  # Deberia retornar 40. La lista queda: 0, 1, 2, 3, 2
+    print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 2, 3, 2
 
     print("F I N")
