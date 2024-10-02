@@ -52,6 +52,19 @@ class SecuenciaListaDoble:
         self.final_lista = nuevo_nodo
         self.numero_elementos = self.numero_elementos + 1
 
+    def remover_frente(self):
+        resultado = self.cabeza_lista.elemento
+
+        self.cabeza_lista = self.cabeza_lista.siguiente
+        if self.cabeza_lista is None:
+            self.final_lista = None
+        else:
+            self.cabeza_lista.anterior = None
+
+        self.numero_elementos = self.numero_elementos - 1
+
+        return resultado
+
 
 if __name__ == "__main__":
 
@@ -68,4 +81,13 @@ if __name__ == "__main__":
     print(f"{secuencia.representar()=}")  # Salida: (3,2,1,0)
     secuencia.insertar_final(10)
     secuencia.insertar_final(20)
-    print(f"{secuencia.representar()=}")  # Salida: (3,2,1,0, 10, 20)
+    secuencia.insertar_final(30)
+    print(f"{secuencia.representar()=}")  # Salida: (10, 20, 30)
+
+    print(f"1 {secuencia.remover_frente()=}")  # Salida: 10
+    print(f"2 {secuencia.remover_frente()=}")  # Salida: 20
+    print(f"3 {secuencia.remover_frente()=}")  # Salida: 30
+
+    print(f" {secuencia.esta_vacia()=}")  # Deberia ser True
+    print(f" {secuencia.cabeza_lista=}")  # Deberia ser None
+    print(f" {secuencia.final_lista=}")  # Deberia ser None
