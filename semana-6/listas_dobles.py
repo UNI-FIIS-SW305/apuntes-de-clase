@@ -53,6 +53,9 @@ class SecuenciaListaDoble:
         self.numero_elementos = self.numero_elementos + 1
 
     def remover_frente(self):
+        if self.esta_vacia():
+            return None
+
         resultado = self.cabeza_lista.elemento
 
         self.cabeza_lista = self.cabeza_lista.siguiente
@@ -60,6 +63,22 @@ class SecuenciaListaDoble:
             self.final_lista = None
         else:
             self.cabeza_lista.anterior = None
+
+        self.numero_elementos = self.numero_elementos - 1
+
+        return resultado
+
+    def remover_ultimo(self):
+        if self.esta_vacia():
+            return None
+
+        resultado = self.final_lista.elemento
+        self.final_lista = self.final_lista.anterior
+
+        if self.final_lista is None:
+            self.cabeza_lista = None
+        else:
+            self.final_lista.siguiente = None
 
         self.numero_elementos = self.numero_elementos - 1
 
@@ -84,9 +103,13 @@ if __name__ == "__main__":
     secuencia.insertar_final(30)
     print(f"{secuencia.representar()=}")  # Salida: (10, 20, 30)
 
-    print(f"1 {secuencia.remover_frente()=}")  # Salida: 10
-    print(f"2 {secuencia.remover_frente()=}")  # Salida: 20
-    print(f"3 {secuencia.remover_frente()=}")  # Salida: 30
+    # print(f"1 {secuencia.remover_frente()=}")  # Salida: 10
+    # print(f"2 {secuencia.remover_frente()=}")  # Salida: 20
+    # print(f"3 {secuencia.remover_frente()=}")  # Salida: 30
+
+    print(f"1 {secuencia.remover_ultimo()=}")  # Salida: 30
+    print(f"2 {secuencia.remover_ultimo()=}")  # Salida: 20
+    print(f"3 {secuencia.remover_ultimo()=}")  # Salida: 10
 
     print(f" {secuencia.esta_vacia()=}")  # Deberia ser True
     print(f" {secuencia.cabeza_lista=}")  # Deberia ser None
