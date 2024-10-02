@@ -118,11 +118,30 @@ class SecuenciaListasEnlazadas:
             self.numero_elementos = self.numero_elementos + 1
 
     def remover(self, posicion):
-        return
+        if posicion in range(0, self.numero_elementos - 1):
+            if posicion == 0:
+                return self.remover_frente()
+            elif posicion == self.numero_elementos - 1:
+                return self.remover_final()
+            else:
+                nodo_predecesor = self.cabeza_lista
+                for _ in range(posicion - 1):
+                    nodo_predecesor = nodo_predecesor.siguiente
+
+                nodo_a_eliminar = nodo_predecesor.siguiente
+                resultado = nodo_a_eliminar.elemento
+
+                nodo_predecesor.siguiente = nodo_a_eliminar.siguiente
+
+                self.numero_elementos = self.numero_elementos - 1
+
+                return resultado
+
+        else:
+            return None
 
 
-if __name__ == "__main__":
-
+def prueba_secuencia():
     mi_secuencia = SecuenciaListasEnlazadas()
     print(f"{mi_secuencia.numero_elementos=}")  # Deberia ser 0
     print(f"{mi_secuencia.esta_vacia()=}")  # Deberia ser True
@@ -160,3 +179,21 @@ if __name__ == "__main__":
     print(f"{mi_secuencia.representar()=}")  # Deberia ver: 0, 1, 2, 3, 2
 
     print("F I N")
+
+
+if __name__ == "__main__":
+    secuencia = SecuenciaListasEnlazadas()
+
+    secuencia.insertar_final(0)
+    secuencia.insertar_final(1)
+    secuencia.insertar_final(2)
+    secuencia.insertar_final(3)
+    secuencia.insertar_final(4)
+
+    print(f"{secuencia.representar()=}")
+    print(f"{secuencia.remover(5)=}")  # Deberia ser: None
+    print(f"{secuencia.remover(2)=}")  # Deberia ser 2
+    print(f"{secuencia.representar()=}")  # Deberia ser: (0,1,3,4)
+
+    print(f"{secuencia.remover(1)=}")  # Deberia ser 1
+    print(f"{secuencia.representar()=}")  # Deberia ser: (0,3,4)
