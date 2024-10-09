@@ -1,5 +1,4 @@
 class NodoDoble:
-
     def __init__(self, elemento, siguiente, anterior) -> None:
         self.elemento = elemento
         self.siguiente = siguiente
@@ -7,7 +6,6 @@ class NodoDoble:
 
 
 class SecuenciaListaDoble:
-
     def __init__(self) -> None:
         self.cabeza_lista = None
         self.final_lista = None
@@ -84,9 +82,58 @@ class SecuenciaListaDoble:
 
         return resultado
 
+    def obtener_elemento(self, posicion):
+        if posicion < 0 or posicion >= self.numero_elementos:
+            return None
 
-if __name__ == "__main__":
+        nodo_en_posicion = self.cabeza_lista
+        indice = 0
 
+        while indice < posicion:
+            nodo_en_posicion = nodo_en_posicion.siguiente
+            indice = indice + 1
+
+        return nodo_en_posicion.elemento
+
+    def obtener_posicion(self, elemento):
+        nodo_en_posicion = self.cabeza_lista
+        posicion_actual = 0
+
+        # Bucle
+        while nodo_en_posicion is not None:
+            if nodo_en_posicion.elemento == elemento:
+                return posicion_actual
+
+            nodo_en_posicion = nodo_en_posicion.siguiente
+            posicion_actual = posicion_actual + 1
+
+        return -1
+
+    def insertar(self, posicion, elemento):
+        if posicion > self.numero_elementos - 1 or posicion < 0:
+            return None
+        elif posicion == 0:
+            self.insertar_frente(elemento)
+        elif posicion == self.numero_elementos:
+            self.insertar_final(elemento)
+        else:
+            nodo_en_posicion = self.cabeza_lista
+
+            for _ in range(posicion):
+                nodo_en_posicion = nodo_en_posicion.siguiente
+
+            nodo_predecesor = nodo_en_posicion.anterior
+            nuevo_nodo = NodoDoble(
+                elemento=elemento, anterior=nodo_predecesor, siguiente=nodo_en_posicion
+            )
+
+            nodo_en_posicion.anterior = nuevo_nodo
+            nodo_predecesor.siguiente = nuevo_nodo
+
+            self.numero_elementos = self.numero_elementos + 1
+
+
+def prueba_secuencia_doble():
     secuencia = SecuenciaListaDoble()
 
     # secuencia.insertar_frente(0)
@@ -114,3 +161,28 @@ if __name__ == "__main__":
     print(f" {secuencia.esta_vacia()=}")  # Deberia ser True
     print(f" {secuencia.cabeza_lista=}")  # Deberia ser None
     print(f" {secuencia.final_lista=}")  # Deberia ser None
+
+
+if __name__ == "__main__":
+    secuencia = SecuenciaListaDoble()
+
+    secuencia.insertar_final(0)
+    secuencia.insertar_final(1)
+    secuencia.insertar_final(2)
+    secuencia.insertar_final(3)
+    secuencia.insertar_final(4)
+    secuencia.insertar_final(4)
+
+    print(f"{secuencia.obtener_elemento(posicion=2)=}")  # Deberia ser 2
+    print(f"{secuencia.obtener_elemento(posicion=5)=}")  # Deberia ser None
+
+    print(f"{secuencia.obtener_posicion(4)=}")  # Deberia ser 4
+    print(f"{secuencia.obtener_posicion(6)=}")  # Deberia ser -1
+
+    # print(f"{secuencia.representar()=}")
+
+    secuencia.insertar(posicion=5, elemento=5)
+    print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
+
+    print(f"{secuencia.insertar(posicion=10, elemento=10)=}")
+    print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
