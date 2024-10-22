@@ -192,7 +192,7 @@ def prueba_secuencia_doble():
     print(f" {secuencia.final_lista=}")  # Deberia ser None
 
 
-if __name__ == "__main__":
+def prueba_lista_doble():
     secuencia = SecuenciaListaDoble()
 
     secuencia.insertar_final(0)
@@ -222,3 +222,41 @@ if __name__ == "__main__":
 
     # print(f"{secuencia.insertar(posicion=10, elemento=10)=}")
     # print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
+
+
+def es_palindromo(palabra):
+    if palabra is None:
+        return False
+
+    if len(palabra) == 0:
+        return True
+
+    lista_doble = SecuenciaListaDoble()
+
+    # TODO: Revisar el metodo insertar
+    for caracter in palabra:
+        lista_doble.insertar_final(caracter)
+
+    nodo_izquierda = lista_doble.cabeza_lista
+    nodo_derecha = lista_doble.final_lista
+
+    indice = 0
+
+    while indice <= len(palabra) / 2:
+        if nodo_izquierda.elemento != nodo_derecha.elemento:
+            return False
+
+        nodo_izquierda = nodo_izquierda.siguiente
+        nodo_derecha = nodo_derecha.anterior
+
+        indice = indice + 1
+
+    return True
+
+
+if __name__ == "__main__":
+    print(f"{es_palindromo('rodar')=}")  # False
+    print(f"{es_palindromo('radar')=}")  # True
+    print(f"{es_palindromo('anna')=}")  # True
+    print(f"{es_palindromo(None)=}")  # False
+    print(f"{es_palindromo('')=}")  # True
