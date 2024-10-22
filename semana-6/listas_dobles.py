@@ -132,6 +132,35 @@ class SecuenciaListaDoble:
 
             self.numero_elementos = self.numero_elementos + 1
 
+    def remover(self, posicion):
+        if posicion < 0 or posicion >= self.numero_elementos:
+            return None
+        elif posicion == 0:
+            return self.remover_frente()
+        elif posicion == self.numero_elementos - 1:
+            return self.remover_ultimo()
+        else:
+            nodo_actual = self.cabeza_lista
+
+            posicion_actual = 0
+
+            while nodo_actual is not None:
+                if posicion_actual == posicion:
+                    break
+
+                nodo_actual = nodo_actual.siguiente
+                posicion_actual = posicion_actual + 1
+
+            nodo_en_posicion = nodo_actual
+            nodo_anterior = nodo_en_posicion.anterior
+            nodo_siguiente = nodo_en_posicion.siguiente
+
+            nodo_anterior.siguiente = nodo_siguiente
+            nodo_siguiente.anterior = nodo_anterior
+
+            self.numero_elementos = self.numero_elementos - 1
+            return nodo_en_posicion.elemento
+
 
 def prueba_secuencia_doble():
     secuencia = SecuenciaListaDoble()
@@ -171,18 +200,25 @@ if __name__ == "__main__":
     secuencia.insertar_final(2)
     secuencia.insertar_final(3)
     secuencia.insertar_final(4)
-    secuencia.insertar_final(4)
 
-    print(f"{secuencia.obtener_elemento(posicion=2)=}")  # Deberia ser 2
-    print(f"{secuencia.obtener_elemento(posicion=5)=}")  # Deberia ser None
+    print(f"{secuencia.representar()=}")
 
-    print(f"{secuencia.obtener_posicion(4)=}")  # Deberia ser 4
-    print(f"{secuencia.obtener_posicion(6)=}")  # Deberia ser -1
+    resultado = secuencia.remover(posicion=4)
+    print(f"{resultado=}")
+    print(f"{secuencia.representar()=}")
 
-    # print(f"{secuencia.representar()=}")
+    # secuencia.insertar_final(4)
 
-    secuencia.insertar(posicion=5, elemento=5)
-    print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
+    # print(f"{secuencia.obtener_elemento(posicion=2)=}")  # Deberia ser 2
+    # print(f"{secuencia.obtener_elemento(posicion=5)=}")  # Deberia ser None
 
-    print(f"{secuencia.insertar(posicion=10, elemento=10)=}")
-    print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
+    # print(f"{secuencia.obtener_posicion(4)=}")  # Deberia ser 4
+    # print(f"{secuencia.obtener_posicion(6)=}")  # Deberia ser -1
+
+    # # print(f"{secuencia.representar()=}")
+
+    # secuencia.insertar(posicion=5, elemento=5)
+    # print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
+
+    # print(f"{secuencia.insertar(posicion=10, elemento=10)=}")
+    # print(f"{secuencia.representar()=}")  # Deberia ser (0,1,2,3,4,5,4)
