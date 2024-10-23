@@ -161,6 +161,35 @@ class SecuenciaListaDoble:
             self.numero_elementos = self.numero_elementos - 1
             return nodo_en_posicion.elemento
 
+    def invertir(self):
+        nodo_izquierda = self.cabeza_lista
+        nodo_derecha = self.final_lista
+
+        posicion_izquierda = 0
+        while posicion_izquierda < self.numero_elementos // 2:
+            nodo_izquierda.elemento, nodo_derecha.elemento = (
+                nodo_derecha.elemento,
+                nodo_izquierda.elemento,
+            )
+
+            nodo_izquierda = nodo_izquierda.siguiente
+            nodo_derecha = nodo_derecha.anterior
+
+            posicion_izquierda = posicion_izquierda + 1
+
+    def invertir_dos(self):
+        nodo_actual = self.cabeza_lista
+
+        while nodo_actual is not None:
+            nodo_actual.siguiente, nodo_actual.anterior = (
+                nodo_actual.anterior,
+                nodo_actual.siguiente,
+            )
+
+            nodo_actual = nodo_actual.anterior
+
+        self.cabeza_lista, self.final_lista = self.final_lista, self.cabeza_lista
+
 
 def prueba_secuencia_doble():
     secuencia = SecuenciaListaDoble()
@@ -254,15 +283,24 @@ def es_palindromo(palabra):
     return True
 
 
-if __name__ == "__main__":
-    # print(f"{es_palindromo('rodar')=}")  # False
-    # print(f"{es_palindromo('radar')=}")  # True
-    # print(f"{es_palindromo('anna')=}")  # True
-    # print(f"{es_palindromo(None)=}")  # False
-    # print(f"{es_palindromo('')=}")  # True
+def prueba_palindromo():
+    print(f"{es_palindromo('rodar')=}")  # False
+    print(f"{es_palindromo('radar')=}")  # True
+    print(f"{es_palindromo('anna')=}")  # True
+    print(f"{es_palindromo(None)=}")  # False
+    print(f"{es_palindromo('')=}")  # True
 
+
+if __name__ == "__main__":
     secuencia = SecuenciaListaDoble()
-    secuencia.insertar(0, 0)
-    secuencia.insertar(1, 1)
+
+    secuencia.insertar_final(0)
+    secuencia.insertar_final(1)
+    secuencia.insertar_final(2)
+    secuencia.insertar_final(3)
+    secuencia.insertar_final(4)
 
     print(f"{secuencia.representar()=}")
+
+    secuencia.invertir_dos()
+    print(f"{secuencia.representar()=}")  # (4, 3, 2, 1, 0)
