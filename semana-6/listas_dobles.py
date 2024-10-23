@@ -110,7 +110,7 @@ class SecuenciaListaDoble:
         return -1
 
     def insertar(self, posicion, elemento):
-        if posicion > self.numero_elementos - 1 or posicion < 0:
+        if posicion > self.numero_elementos or posicion < 0:
             return None
         elif posicion == 0:
             self.insertar_frente(elemento)
@@ -255,8 +255,14 @@ def es_palindromo(palabra):
 
 
 if __name__ == "__main__":
-    print(f"{es_palindromo('rodar')=}")  # False
-    print(f"{es_palindromo('radar')=}")  # True
-    print(f"{es_palindromo('anna')=}")  # True
-    print(f"{es_palindromo(None)=}")  # False
-    print(f"{es_palindromo('')=}")  # True
+    # print(f"{es_palindromo('rodar')=}")  # False
+    # print(f"{es_palindromo('radar')=}")  # True
+    # print(f"{es_palindromo('anna')=}")  # True
+    # print(f"{es_palindromo(None)=}")  # False
+    # print(f"{es_palindromo('')=}")  # True
+
+    secuencia = SecuenciaListaDoble()
+    secuencia.insertar(0, 0)
+    secuencia.insertar(1, 1)
+
+    print(f"{secuencia.representar()=}")
