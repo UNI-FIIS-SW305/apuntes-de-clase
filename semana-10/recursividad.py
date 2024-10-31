@@ -56,7 +56,31 @@ def sumar_lista_chavez(elementos):
     elif len(elementos) == 1:
         return elementos[0]
     else:
-        return elementos[0] + sumar_lista(elementos=elementos[1:])
+        nueva_lista = elementos[1:]
+        return elementos[0] + sumar_lista_chavez(elementos=nueva_lista)
+
+
+def sumar_lista(elementos):
+    return sumar_lista_farid(elementos=elementos, posicion=0)
+
+
+def sumar_lista_auxiliar(elementos, posicion_inicio_lista):
+    posicion_fin_lista = len(elementos) - 1
+    if posicion_inicio_lista == posicion_fin_lista:
+        return elementos[posicion_inicio_lista]
+    else:
+        nuevo_inicio_lista = posicion_inicio_lista + 1
+        return elementos[posicion_inicio_lista] + sumar_lista_auxiliar(
+            elementos, posicion_inicio_lista=nuevo_inicio_lista
+        )
+
+
+def sumar_lista_farid(elementos, posicion=0):
+    if not isinstance(elementos, list):
+        return None
+    if posicion == len(elementos):
+        return 0
+    return elementos[posicion] + sumar_lista_farid(elementos, posicion + 1)
 
 
 if __name__ == "__main__":
@@ -71,6 +95,13 @@ if __name__ == "__main__":
     # print(f"{calcular_potencia(2,5)=}")  # 32
     # print(f"{calcular_potencia(2,exponente=-1)=}")  # None
 
-    # print(f"{sumar_lista_yazid(elementos=None)}")  # None
-    # print(f"{sumar_lista_yazid(elementos='[1, 2, 3, 4, 5]')}")  # None
-    print(f"{sumar_lista_yazid(elementos=[1 , 3 , 5, 7, 9])=}")  # 25
+    # print(f"{sumar_lista_chavez(elementos=None)}")  # None
+    # print(f"{sumar_lista_chavez(elementos='[1, 2, 3, 4, 5]')}")  # None
+    # print(f"{sumar_lista_chavez(elementos=[1 , 3 , 5, 7, 9])=}")  # 25
+
+    elementos = [1, 3, 5, 7, 9]
+
+    print(f"{elementos=}")
+    print(f"{sumar_lista(elementos=elementos)=}")  # 25
+    # print(f"{sumar_lista(elementos=elementos)=}")  # 25
+    print(f"{elementos=}")  #  [1, 3, 5, 7, 9]
