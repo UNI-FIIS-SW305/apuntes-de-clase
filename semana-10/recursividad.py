@@ -162,6 +162,37 @@ def algoritmo_euclides_jhostin(un_numero, otro_numero):
     return algoritmo_euclides_jhostin(otro_numero, un_numero % otro_numero)
 
 
+def esta_ordenada(elementos):
+    if len(elementos) <= 1:
+        return True
+    else:
+        return elementos[0] <= elementos[1] and esta_ordenada(elementos=elementos[1:])
+
+
+def busqueda_binaria(elementos, objetivo):
+    if (
+        not isinstance(elementos, list)
+        or not isinstance(objetivo, int)
+        or elementos is None
+    ):
+        return None
+
+    if not esta_ordenada(elementos):
+        return None
+
+    posicion_inicio = 0
+    posicion_fin = len(elementos) - 1
+    posicion_medio = (posicion_inicio + posicion_fin) // 2
+    elemento_del_medio = elementos[posicion_medio]
+
+    if elemento_del_medio == objetivo:
+        pass
+    elif objetivo < elemento_del_medio:
+        pass
+    else:
+        pass
+
+
 if __name__ == "__main__":
     # print(f"{calcular_factorial(-1)=}")  # None
     # print(f"{calcular_factorial('4')=}")  # None
@@ -196,5 +227,31 @@ if __name__ == "__main__":
     # print(f"{algoritmo_de_euclides(un_numero= 1272, otro_numero=4032)=}")
     # print(f"{algoritmo_de_euclides(un_numero= 4032, otro_numero=1272)=}")
 
-    print(f"{algoritmo_euclides_jhostin(un_numero= 1272, otro_numero=4032)=}")
-    print(f"{algoritmo_euclides_jhostin(un_numero= 4032, otro_numero=1272)=}")
+    # print(f"{algoritmo_euclides_jhostin(un_numero= 1272, otro_numero=4032)=}")
+    # print(f"{algoritmo_euclides_jhostin(un_numero= 4032, otro_numero=1272)=}")
+
+    print(f"{busqueda_binaria(elementos=None, objetivo=23)=}")  # Deberia retornar None
+    print(
+        f"{busqueda_binaria(elementos='[1, 2, 3]', objetivo=23)=}"
+    )  # Deberia retornar None
+    print(
+        f"{busqueda_binaria(elementos=[1, 2, 3], objetivo='23')=}"
+    )  # Deberia retornar None
+
+    elementos_ordenado = [2, 5, 8, 10, 13, 20, 23, 50, 90]
+    elementos_desordenado = [2, 5, 8, 13, 10, 20, 23, 50, 90]
+
+    print(f"{esta_ordenada(elementos_ordenado)=}")  # Deberia ser True
+    print(f"{esta_ordenada(elementos_desordenado)=}")  # Deberia ser True
+
+    print(
+        f"{busqueda_binaria(elementos=elementos_desordenado, objetivo=23)=}"
+    )  # Deberia retornar None
+
+    print(
+        f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=23)=}"
+    )  # Deberia retornar True
+
+    print(
+        f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=7)=}"
+    )  # Deberia retornar False
