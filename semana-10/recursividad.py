@@ -155,6 +155,13 @@ def algoritmo_de_euclides_auxiliar(numero_mayor, numero_menor):
         )
 
 
+def algoritmo_euclides_jhostin(un_numero, otro_numero):
+    if otro_numero == 0:
+        return un_numero
+
+    return algoritmo_euclides_jhostin(otro_numero, un_numero % otro_numero)
+
+
 if __name__ == "__main__":
     # print(f"{calcular_factorial(-1)=}")  # None
     # print(f"{calcular_factorial('4')=}")  # None
@@ -186,5 +193,8 @@ if __name__ == "__main__":
     # invertir_lista_in_place(elementos=elementos)
     # print(f"{elementos=}")
 
-    print(f"{algoritmo_de_euclides(un_numero= 1272, otro_numero=4032)=}")
+    # print(f"{algoritmo_de_euclides(un_numero= 1272, otro_numero=4032)=}")
     # print(f"{algoritmo_de_euclides(un_numero= 4032, otro_numero=1272)=}")
+
+    print(f"{algoritmo_euclides_jhostin(un_numero= 1272, otro_numero=4032)=}")
+    print(f"{algoritmo_euclides_jhostin(un_numero= 4032, otro_numero=1272)=}")
