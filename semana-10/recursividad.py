@@ -134,6 +134,27 @@ def invertir_lista_in_place_auxiliar(elementos, posicion):
         invertir_lista_in_place_auxiliar(elementos=elementos, posicion=posicion + 1)
 
 
+def algoritmo_de_euclides(un_numero, otro_numero):
+    numero_menor = un_numero
+    numero_mayor = otro_numero
+
+    if numero_menor > numero_mayor:
+        numero_mayor, numero_menor = numero_menor, numero_mayor
+
+    return algoritmo_de_euclides_auxiliar(
+        numero_menor=numero_menor, numero_mayor=numero_mayor
+    )
+
+
+def algoritmo_de_euclides_auxiliar(numero_mayor, numero_menor):
+    if numero_menor == 0:
+        return numero_mayor
+    else:
+        return algoritmo_de_euclides_auxiliar(
+            numero_mayor=numero_menor, numero_menor=numero_mayor % numero_menor
+        )
+
+
 if __name__ == "__main__":
     # print(f"{calcular_factorial(-1)=}")  # None
     # print(f"{calcular_factorial('4')=}")  # None
@@ -160,7 +181,10 @@ if __name__ == "__main__":
     # print(f"{invertir_lista(None)=}")  # Retorne None
     # print(f"{invertir_lista(123)}")  # Retorne None
 
-    elementos = [8, 5, 3, 4, 1]
-    # invertir_lista(elementos=elementos)  # Deberia retornar [1, 4, 3, 5, 8]
-    invertir_lista_in_place(elementos=elementos)
-    print(f"{elementos=}")
+    # elementos = [8, 5, 3, 4, 1]
+    # # invertir_lista(elementos=elementos)  # Deberia retornar [1, 4, 3, 5, 8]
+    # invertir_lista_in_place(elementos=elementos)
+    # print(f"{elementos=}")
+
+    print(f"{algoritmo_de_euclides(un_numero= 1272, otro_numero=4032)=}")
+    # print(f"{algoritmo_de_euclides(un_numero= 4032, otro_numero=1272)=}")
