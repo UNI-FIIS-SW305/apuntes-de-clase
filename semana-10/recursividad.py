@@ -180,17 +180,93 @@ def busqueda_binaria(elementos, objetivo):
     if not esta_ordenada(elementos):
         return None
 
+    if len(elementos) == 0:
+        return False
+
     posicion_inicio = 0
     posicion_fin = len(elementos) - 1
     posicion_medio = (posicion_inicio + posicion_fin) // 2
     elemento_del_medio = elementos[posicion_medio]
 
     if elemento_del_medio == objetivo:
-        pass
+        return True
     elif objetivo < elemento_del_medio:
-        pass
+        elementos_reducido = elementos[0:posicion_medio]  # Usando slicing.
+        return busqueda_binaria(elementos=elementos_reducido, objetivo=objetivo)
     else:
-        pass
+        return busqueda_binaria(
+            elementos=elementos[posicion_medio + 1 :], objetivo=objetivo
+        )
+
+
+def busqueda_binaria_jhostin(elementos, objetivo):
+    # def busqueda_binaria_jhostin(elementos, objetivo, lista_original):
+    if (
+        not isinstance(elementos, list)
+        or not isinstance(objetivo, int)
+        or elementos is None
+    ):
+        return None
+
+    if not esta_ordenada(elementos):
+        return None
+
+    if len(elementos) == 0:
+        return False
+
+    posicion_inicio = 0
+    posicion_fin = len(elementos) - 1
+    posicion_medio = (posicion_inicio + posicion_fin) // 2
+    elemento_del_medio = elementos[posicion_medio]
+
+    if elemento_del_medio == objetivo:
+        return elementos.index(objetivo)
+        # return lista_original.index(objetivo)
+    elif objetivo < elemento_del_medio:
+        elementos_reducido = elementos[0:posicion_medio]  # Usando slicing.
+        return busqueda_binaria_jhostin(elementos=elementos_reducido, objetivo=objetivo)
+    else:
+        return busqueda_binaria_jhostin(
+            elementos=elementos[posicion_medio + 1 :], objetivo=objetivo
+        )
+
+
+def busqueda_binaria_indice(elementos, objetivo):
+    # Validar elementos, validar objetivo, validar que la lista este ordenada
+
+    return busqueda_binaria_indice_auxiliar(
+        elementos=elementos,
+        objetivo=objetivo,
+        posicion_inicio=0,
+        posicion_final=len(elementos) - 1,
+    )
+
+
+def busqueda_binaria_indice_auxiliar(
+    elementos, objetivo, posicion_inicio, posicion_final
+):
+    if posicion_inicio > posicion_final:
+        return -1
+    else:
+        posicion_medio = (posicion_inicio + posicion_final) // 2
+        elemento_del_medio = elementos[posicion_medio]
+
+        if elemento_del_medio == objetivo:
+            return posicion_medio
+        elif objetivo < elemento_del_medio:
+            return busqueda_binaria_indice_auxiliar(
+                elementos=elementos,
+                objetivo=objetivo,
+                posicion_inicio=posicion_inicio,
+                posicion_final=posicion_medio - 1,
+            )
+        else:
+            return busqueda_binaria_indice_auxiliar(
+                elementos=elementos,
+                objetivo=objetivo,
+                posicion_inicio=posicion_medio + 1,
+                posicion_final=posicion_final,
+            )
 
 
 if __name__ == "__main__":
@@ -230,28 +306,36 @@ if __name__ == "__main__":
     # print(f"{algoritmo_euclides_jhostin(un_numero= 1272, otro_numero=4032)=}")
     # print(f"{algoritmo_euclides_jhostin(un_numero= 4032, otro_numero=1272)=}")
 
-    print(f"{busqueda_binaria(elementos=None, objetivo=23)=}")  # Deberia retornar None
-    print(
-        f"{busqueda_binaria(elementos='[1, 2, 3]', objetivo=23)=}"
-    )  # Deberia retornar None
-    print(
-        f"{busqueda_binaria(elementos=[1, 2, 3], objetivo='23')=}"
-    )  # Deberia retornar None
+    # print(f"{busqueda_binaria(elementos=None, objetivo=23)=}")  # Deberia retornar None
+    # print(
+    #     f"{busqueda_binaria(elementos='[1, 2, 3]', objetivo=23)=}"
+    # )  # Deberia retornar None
+    # print(
+    #     f"{busqueda_binaria(elementos=[1, 2, 3], objetivo='23')=}"
+    # )  # Deberia retornar None
 
     elementos_ordenado = [2, 5, 8, 10, 13, 20, 23, 50, 90]
-    elementos_desordenado = [2, 5, 8, 13, 10, 20, 23, 50, 90]
+    # elementos_desordenado = [2, 5, 8, 13, 10, 20, 23, 50, 90]
 
-    print(f"{esta_ordenada(elementos_ordenado)=}")  # Deberia ser True
-    print(f"{esta_ordenada(elementos_desordenado)=}")  # Deberia ser True
+    # # print(f"{esta_ordenada(elementos_ordenado)=}")  # Deberia ser True
+    # # print(f"{esta_ordenada(elementos_desordenado)=}")  # Deberia ser True
+
+    # print(
+    #     f"{busqueda_binaria(elementos=elementos_desordenado, objetivo=23)=}"
+    # )  # Deberia retornar None
+
+    # print(
+    #     f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=23)=}"
+    # )  # Deberia retornar True
+
+    # print(
+    #     f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=7)=}"
+    # )  # Deberia retornar False
 
     print(
-        f"{busqueda_binaria(elementos=elementos_desordenado, objetivo=23)=}"
-    )  # Deberia retornar None
-
-    print(
-        f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=23)=}"
+        f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=23)=}"  # Debe ser 6
     )  # Deberia retornar True
 
     print(
-        f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=7)=}"
+        f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=7)=}"  # Debe ser  -1
     )  # Deberia retornar False
