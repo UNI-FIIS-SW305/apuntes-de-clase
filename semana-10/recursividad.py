@@ -269,6 +269,20 @@ def busqueda_binaria_indice_auxiliar(
             )
 
 
+def obtener_numero_fibonacci(posicion):
+    if not isinstance(posicion, int) or posicion < 0:
+        return None
+
+    if posicion == 0:
+        return 0
+    elif posicion == 1:
+        return 1
+    else:
+        return obtener_numero_fibonacci(posicion - 1) + obtener_numero_fibonacci(
+            posicion - 2
+        )
+
+
 if __name__ == "__main__":
     # print(f"{calcular_factorial(-1)=}")  # None
     # print(f"{calcular_factorial('4')=}")  # None
@@ -314,7 +328,7 @@ if __name__ == "__main__":
     #     f"{busqueda_binaria(elementos=[1, 2, 3], objetivo='23')=}"
     # )  # Deberia retornar None
 
-    elementos_ordenado = [2, 5, 8, 10, 13, 20, 23, 50, 90]
+    # elementos_ordenado = [2, 5, 8, 10, 13, 20, 23, 50, 90]
     # elementos_desordenado = [2, 5, 8, 13, 10, 20, 23, 50, 90]
 
     # # print(f"{esta_ordenada(elementos_ordenado)=}")  # Deberia ser True
@@ -332,10 +346,16 @@ if __name__ == "__main__":
     #     f"{busqueda_binaria(elementos=elementos_ordenado, objetivo=7)=}"
     # )  # Deberia retornar False
 
-    print(
-        f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=23)=}"  # Debe ser 6
-    )  # Deberia retornar True
+    # print(
+    #     f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=23)=}"  # Debe ser 6
+    # )  # Deberia retornar True
 
-    print(
-        f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=7)=}"  # Debe ser  -1
-    )  # Deberia retornar False
+    # print(
+    #     f"{busqueda_binaria_indice(elementos=elementos_ordenado, objetivo=7)=}"  # Debe ser  -1
+    # )  # Deberia retornar False
+
+    # print(f"{obtener_numero_fibonacci(posicion=6)=}")  # Deberia ser 8
+    # print(f"{obtener_numero_fibonacci(posicion=-1)=}")  # Deberia ser None
+    # print(f"{obtener_numero_fibonacci(posicion=[])=}")  # Deberia ser None
+
+    print(f"{obtener_numero_fibonacci(posicion=50)=}")
