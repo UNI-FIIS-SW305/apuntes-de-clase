@@ -283,6 +283,47 @@ def obtener_numero_fibonacci(posicion):
         )
 
 
+def obtener_numero_fibonacci_jhostin(posicion):
+    fibonacci_posicion, _ = obtener_numero_fibonacci_jhostin_auxiliar(posicion)
+    return fibonacci_posicion
+
+
+def obtener_numero_fibonacci_jhostin_auxiliar(posicion):
+    if posicion <= 1:
+        return (
+            posicion,
+            0,
+        )  # [0]: Valor fibonacci para (posicion), [1]: Valor fibonacci para la (posicion - 1)
+    else:
+        fibonacci_posicion_menos_uno, fibonacci_posicion_menos_dos = (
+            obtener_numero_fibonacci_jhostin_auxiliar(posicion - 1)
+        )
+
+        return (
+            fibonacci_posicion_menos_uno + fibonacci_posicion_menos_dos,
+            fibonacci_posicion_menos_uno,
+        )
+
+
+def sumar_elementos(elementos):
+    print(f"{elementos=}")
+
+    if isinstance(elementos, list):
+        if len(elementos) == 0:
+            return 0
+        if len(elementos) == 1:
+            return elementos[0]
+
+        # Implementar el caso cuando la lista sea 1
+        posicion_medio = len(elementos) // 2
+        parte_izquierda = elementos[:posicion_medio]
+        parte_derecha = elementos[posicion_medio:]
+
+        return sumar_elementos(parte_izquierda) + sumar_elementos(parte_derecha)
+    else:
+        return None
+
+
 if __name__ == "__main__":
     # print(f"{calcular_factorial(-1)=}")  # None
     # print(f"{calcular_factorial('4')=}")  # None
@@ -358,4 +399,10 @@ if __name__ == "__main__":
     # print(f"{obtener_numero_fibonacci(posicion=-1)=}")  # Deberia ser None
     # print(f"{obtener_numero_fibonacci(posicion=[])=}")  # Deberia ser None
 
-    print(f"{obtener_numero_fibonacci(posicion=50)=}")
+    # print(f"{obtener_numero_fibonacci_jhostin(posicion=50)=}")
+
+    print(f"{sumar_elementos(None)=}")  # Retornar None
+    print(f"{sumar_elementos('una lista')=}")  # Retornar None
+    print(f"{sumar_elementos([])=}")  # Retornar 0
+    print(f"{sumar_elementos([10, 20, 30, 40, 10])=}")  # Retornar 110
+    print(f"{sumar_elementos([10])=}")  # Retornar 10
