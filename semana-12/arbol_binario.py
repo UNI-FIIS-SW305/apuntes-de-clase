@@ -32,6 +32,85 @@ class ArbolBinario:
     def obtener_tamanio(self):
         return obtener_tamanio_nodo(self.raiz)
 
+    def obtener_altura(self):
+        return obtener_altura_nodo(self.raiz)
+
+    def recorrer_en_preorden(self):
+        print("Recorrido en preorden: ", end=" ")
+        recorrer_nodo_en_preorden(self.raiz)
+        print()
+
+    def recorrer_en_postorden(self):
+        print("Recorrido en postorden: ", end=" ")
+        recorrer_nodo_en_postorden(self.raiz)
+        print()
+
+    def recorrer_en_inorden(self):
+        print("Recorrido en inorden: ", end=" ")
+        recorrer_nodo_en_inorden(self.raiz)
+        print()
+
+    def retornar_en_preorden(self):
+        lista_de_elementos = []
+        retornar_en_preorden_recursiva(self.raiz, lista_de_elementos)
+        return lista_de_elementos
+
+    def retornar_en_postorden(self):
+        lista_de_elementos = []
+        retornar_en_postorden_auxiliar(self.raiz, lista_de_elementos)
+        return lista_de_elementos
+
+
+def retornar_en_postorden_auxiliar(un_nodo, lista_de_elementos):
+    if un_nodo is not None:
+        retornar_en_postorden_auxiliar(un_nodo.nodo_izquierdo, lista_de_elementos)
+        retornar_en_postorden_auxiliar(un_nodo.nodo_derecho, lista_de_elementos)
+        lista_de_elementos.append(un_nodo.elemento)
+
+
+def retornar_en_preorden_recursiva(raiz_de_subarbol, lista_de_elementos):
+    if raiz_de_subarbol is not None:
+        lista_de_elementos.append(raiz_de_subarbol.elemento)
+        retornar_en_preorden_recursiva(
+            raiz_de_subarbol.nodo_izquierdo, lista_de_elementos
+        )
+        retornar_en_preorden_recursiva(
+            raiz_de_subarbol.nodo_derecho, lista_de_elementos
+        )
+
+
+def recorrer_nodo_en_inorden(nodo):
+    if nodo is not None:
+        recorrer_nodo_en_inorden(nodo.nodo_izquierdo)
+        print(nodo.elemento, end=" ")
+        recorrer_nodo_en_inorden(nodo.nodo_derecho)
+
+
+def recorrer_nodo_en_postorden(nodo):
+    if nodo is not None:
+        recorrer_nodo_en_postorden(nodo.nodo_izquierdo)
+        recorrer_nodo_en_postorden(nodo.nodo_derecho)
+        print(nodo.elemento, end=" ")
+
+
+def recorrer_nodo_en_preorden(nodo):
+    # Inspeccionaba el nodo -> Inspeccionaba el subarbol izquierdo -> Inspeccionaba el subarbol derecho.
+    if nodo is not None:
+        print(nodo.elemento, end=" ")
+        recorrer_nodo_en_preorden(nodo.nodo_izquierdo)
+        recorrer_nodo_en_preorden(nodo.nodo_derecho)
+
+
+def obtener_altura_nodo(nodo):
+    if nodo is None:
+        return -1
+    else:
+        altura_subarbol_derecho = obtener_altura_nodo(nodo.nodo_derecho)
+        altura_subarbol_izquierdo = obtener_altura_nodo(nodo.nodo_izquierdo)
+
+        return 1 + max(altura_subarbol_derecho, altura_subarbol_izquierdo)
+        # return max(altura_subarbol_derecho, altura_subarbol_izquierdo)
+
 
 def obtener_tamanio_nodo(nodo):
     if nodo is None:
@@ -94,6 +173,18 @@ if __name__ == "__main__":
 
     print(f"{arbol.comparar(otro_arbol)=}")  # Deberia ser True
     print(f"{arbol.obtener_tamanio()=}")  # Deberia 7
+    print(f"{arbol.obtener_altura()=}")  # Deberia 3
+    retorno = arbol.recorrer_en_preorden()
+    print(f"{retorno=}")
+
+    elementos_en_preorden = arbol.retornar_en_preorden()
+    print(f"{elementos_en_preorden=}")  # Deberia ser [5 3 2 9 8 20 30 ]
+
+    elementos_en_postorden = arbol.retornar_en_postorden()
+    print(f"{elementos_en_postorden=}")  # Deberia ser [5 3 2 9 8 20 30 ]
+
+    arbol.recorrer_en_postorden()
+    arbol.recorrer_en_inorden()
 
     # arbol_distinto = crear_arbol_de_prueba()
     # arbol_distinto.raiz.nodo_izquierdo.nodo_izquierdo.elemento = 1
