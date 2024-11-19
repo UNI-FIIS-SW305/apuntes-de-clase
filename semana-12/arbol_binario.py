@@ -1,3 +1,6 @@
+from secuencia import SecuenciaListasEnlazadas
+
+
 class NodoBinario:
     def __init__(self, elemento, nodo_izquierdo, nodo_derecho):
         self.elemento = elemento
@@ -50,6 +53,47 @@ class ArbolBinario:
         recorrer_nodo_en_inorden(self.raiz)
         print()
 
+    def recorrer_por_profundidad(self):  # O(n**2)
+        if self.raiz is None:  # O(1)
+            print("El arbol estas vacio")  # O(1)
+        else:
+            print("Recorrido por profundidad: ", end=" ")  # O(1)
+            lista_de_nodos = [self.raiz]  # O(1)
+
+            while len(lista_de_nodos) > 0:  # O(n)
+                nodo_actual = lista_de_nodos.pop(0)  # Orden superior? O(n)
+                print(nodo_actual.elemento, end=" ")
+
+                if nodo_actual.nodo_izquierdo is not None:
+                    lista_de_nodos.append(nodo_actual.nodo_izquierdo)  # O(1)
+                if nodo_actual.nodo_derecho is not None:
+                    lista_de_nodos.append(nodo_actual.nodo_derecho)
+
+            print()
+
+    def recorrer_por_profundidad_eficiente(self):  # O(n)
+        if self.raiz is None:  # O(1)
+            print("El arbol estas vacio")  # O(1)
+        else:
+            print("Recorrido por profundidad: ", end=" ")  # O(1)
+            secuencia_lista_enlazada = SecuenciaListasEnlazadas()
+            secuencia_lista_enlazada.insertar_final(self.raiz)
+
+            while not secuencia_lista_enlazada.esta_vacia():  # O(n)
+                nodo_actual = (
+                    secuencia_lista_enlazada.remover_frente()
+                )  # Orden superior? O(1)
+                print(nodo_actual.elemento, end=" ")
+
+                if nodo_actual.nodo_izquierdo is not None:
+                    secuencia_lista_enlazada.insertar_final(
+                        nodo_actual.nodo_izquierdo
+                    )  # O(1)
+                if nodo_actual.nodo_derecho is not None:
+                    secuencia_lista_enlazada.insertar_final(nodo_actual.nodo_derecho)
+
+            print()
+
     def retornar_en_preorden(self):
         lista_de_elementos = []
         retornar_en_preorden_recursiva(self.raiz, lista_de_elementos)
@@ -59,6 +103,18 @@ class ArbolBinario:
         lista_de_elementos = []
         retornar_en_postorden_auxiliar(self.raiz, lista_de_elementos)
         return lista_de_elementos
+
+    def retornar_en_inorden(self):
+        lista_de_elementos = []
+        retornar_en_inorden_auxiliar(self.raiz, lista_de_elementos)
+        return lista_de_elementos
+
+
+def retornar_en_inorden_auxiliar(un_nodo, lista_de_elementos):
+    if un_nodo is not None:
+        retornar_en_inorden_auxiliar(un_nodo.nodo_izquierdo, lista_de_elementos)
+        lista_de_elementos.append(un_nodo.elemento)
+        retornar_en_inorden_auxiliar(un_nodo.nodo_derecho, lista_de_elementos)
 
 
 def retornar_en_postorden_auxiliar(un_nodo, lista_de_elementos):
@@ -186,8 +242,14 @@ if __name__ == "__main__":
     arbol.recorrer_en_postorden()
     arbol.recorrer_en_inorden()
 
+    elementos_en_inorden = arbol.retornar_en_inorden()
+    print(f"{elementos_en_inorden=}")
+
     # arbol_distinto = crear_arbol_de_prueba()
     # arbol_distinto.raiz.nodo_izquierdo.nodo_izquierdo.elemento = 1
     # arbol_distinto.representar()
 
     # print(f"{arbol.comparar(arbol_distinto)=}")  # Deberia ser False
+
+    arbol.recorrer_por_profundidad()  # Deberia ser: 5, 3, 9, 2, 8, 20, 30.
+    arbol.recorrer_por_profundidad_eficiente()  # Deberia ser: 5, 3, 9, 2, 8, 20, 30.
