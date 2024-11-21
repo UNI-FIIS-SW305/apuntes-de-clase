@@ -21,6 +21,44 @@ class ArbolBinarioBusqueda(ArbolBinario):
     def insertar(self, elemento):
         self.raiz = insertar_en_nodo(self.raiz, elemento)
 
+    def eliminar(self, elemento_a_eliminar):
+        self.raiz = eliminar_nodo(self.raiz, elemento_a_eliminar)
+
+
+def obtener_nodo_sucesor(nodo):
+    nodo_minimo = nodo
+    while nodo_minimo.nodo_izquierdo is not None:
+        nodo_minimo = nodo_minimo.nodo_izquierdo
+
+    return nodo_minimo
+
+
+def eliminar_nodo(nodo, elemento_a_eliminar):
+    if nodo is None:
+        return None  # TODO: Revisar luego
+
+    if nodo.elemento == elemento_a_eliminar:
+        if nodo.nodo_izquierdo is None and nodo.nodo_derecho is None:
+            # Es una hoja!
+            nodo = None
+        elif nodo.nodo_izquierdo is None:
+            nodo = nodo.nodo_derecho
+        elif nodo.nodo_derecho is None:
+            nodo = nodo.nodo_izquierdo
+        else:
+            nodo_sucesor = obtener_nodo_sucesor(nodo.nodo_derecho)
+
+    elif elemento_a_eliminar < nodo.elemento:
+        return eliminar_nodo(
+            nodo.nodo_izquierdo, elemento_a_eliminar
+        )  # TODO: Revisar luego
+    elif elemento_a_eliminar > nodo.elemento:
+        return eliminar_nodo(
+            nodo.nodo_derecho, elemento_a_eliminar
+        )  # TODO: Revisar luego
+
+    return nodo
+
 
 def insertar_en_nodo(nodo, elemento_a_insertar):
     # Retorna un nodo.
@@ -98,15 +136,27 @@ if __name__ == "__main__":
     )  # Deberia ser: NodoBinario(elemento=20)
     print(f"{arbol_busqueda.buscar_iterativo(21)=}")  # Deberia ser: None
 
-    nuevo_arbol = ArbolBinarioBusqueda()
-    nuevo_arbol.insertar(5)
-    nuevo_arbol.insertar(3)
-    nuevo_arbol.insertar(9)
+    # nuevo_arbol = ArbolBinarioBusqueda()
+    # nuevo_arbol.insertar(5)
+    # nuevo_arbol.insertar(3)
+    # nuevo_arbol.insertar(9)
 
-    nuevo_arbol.insertar(30)
+    # nuevo_arbol.insertar(30)
 
-    # nuevo_arbol.insertar(20)
-    # nuevo_arbol.insertar(8)
-    # nuevo_arbol.insertar(2)
+    # # nuevo_arbol.insertar(20)
+    # # nuevo_arbol.insertar(8)
+    # # nuevo_arbol.insertar(2)
 
-    nuevo_arbol.representar()  # Deberia ver un ABB 5, 3, 9
+    # nuevo_arbol.representar()  # Deberia ver un ABB 5, 3, 9
+
+    arbol_busqueda.eliminar(2)
+    print("Dos ha sido eliminado")
+    arbol_busqueda.representar()
+
+    arbol_busqueda.eliminar(20)
+    print("20 ha sido eliminado")
+    arbol_busqueda.representar()
+
+    arbol_busqueda.eliminar(5)
+    print("5 ha sido eliminado")
+    arbol_busqueda.representar()
