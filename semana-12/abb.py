@@ -47,13 +47,16 @@ def eliminar_nodo(nodo, elemento_a_eliminar):
             nodo = nodo.nodo_izquierdo
         else:
             nodo_sucesor = obtener_nodo_sucesor(nodo.nodo_derecho)
+            nodo.elemento = nodo_sucesor.elemento
+
+            nodo.nodo_derecho = eliminar_nodo(nodo.nodo_derecho, nodo_sucesor.elemento)
 
     elif elemento_a_eliminar < nodo.elemento:
-        return eliminar_nodo(
+        nodo.nodo_izquierdo = eliminar_nodo(
             nodo.nodo_izquierdo, elemento_a_eliminar
         )  # TODO: Revisar luego
     elif elemento_a_eliminar > nodo.elemento:
-        return eliminar_nodo(
+        nodo.nodo_derecho = eliminar_nodo(
             nodo.nodo_derecho, elemento_a_eliminar
         )  # TODO: Revisar luego
 
@@ -126,15 +129,15 @@ if __name__ == "__main__":
     print(f"{type(arbol_busqueda)=}")
     arbol_busqueda.representar()
 
-    print(
-        f"{arbol_busqueda.buscar(20).elemento=}"
-    )  # Deberia ser: NodoBinario(elemento=20)
-    print(f"{arbol_busqueda.buscar(21)=}")  # Deberia ser: None
+    # print(
+    #     f"{arbol_busqueda.buscar(20).elemento=}"
+    # )  # Deberia ser: NodoBinario(elemento=20)
+    # print(f"{arbol_busqueda.buscar(21)=}")  # Deberia ser: None
 
-    print(
-        f"{arbol_busqueda.buscar_iterativo(20).elemento=}"
-    )  # Deberia ser: NodoBinario(elemento=20)
-    print(f"{arbol_busqueda.buscar_iterativo(21)=}")  # Deberia ser: None
+    # print(
+    #     f"{arbol_busqueda.buscar_iterativo(20).elemento=}"
+    # )  # Deberia ser: NodoBinario(elemento=20)
+    # print(f"{arbol_busqueda.buscar_iterativo(21)=}")  # Deberia ser: None
 
     # nuevo_arbol = ArbolBinarioBusqueda()
     # nuevo_arbol.insertar(5)
