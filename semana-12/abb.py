@@ -19,6 +19,7 @@ class ArbolBinarioBusqueda(ArbolBinario):
         return None
 
     def insertar(self, elemento):
+        print(f"ABB: Insertando {elemento} ")
         self.raiz = insertar_en_nodo(self.raiz, elemento)
 
     def eliminar(self, elemento_a_eliminar):
@@ -52,13 +53,9 @@ def eliminar_nodo(nodo, elemento_a_eliminar):
             nodo.nodo_derecho = eliminar_nodo(nodo.nodo_derecho, nodo_sucesor.elemento)
 
     elif elemento_a_eliminar < nodo.elemento:
-        nodo.nodo_izquierdo = eliminar_nodo(
-            nodo.nodo_izquierdo, elemento_a_eliminar
-        )  # TODO: Revisar luego
+        nodo.nodo_izquierdo = eliminar_nodo(nodo.nodo_izquierdo, elemento_a_eliminar)
     elif elemento_a_eliminar > nodo.elemento:
-        nodo.nodo_derecho = eliminar_nodo(
-            nodo.nodo_derecho, elemento_a_eliminar
-        )  # TODO: Revisar luego
+        nodo.nodo_derecho = eliminar_nodo(nodo.nodo_derecho, elemento_a_eliminar)
 
     return nodo
 
@@ -154,10 +151,10 @@ if __name__ == "__main__":
 
     arbol_busqueda.eliminar(2)
     print("Dos ha sido eliminado")
-    arbol_busqueda.representar()
+    # arbol_busqueda.representar()
 
     arbol_busqueda.eliminar(20)
-    print("20 ha sido eliminado")
+    # print("20 ha sido eliminado")
     arbol_busqueda.representar()
 
     arbol_busqueda.eliminar(5)
